@@ -1,0 +1,174 @@
+# LABIII - Proyecto Final: Sistema de Cronograma y Viandas – Hospital
+
+## 📋 Descripción del Proyecto
+
+Sistema de información para la **gestión automatizada de cronogramas laborales y asignación de viandas** al personal hospitalario. Desarrollado como proyecto final para Laboratorio III.
+
+El sistema abarca:
+
+- Gestión de turnos y cronogramas mensuales por servicio
+- Asignación automática de viandas según turnos y tipos de dieta
+- Control de inasistencias y solicitudes de cambio de turno
+- Aprobación de viandas por Jefe de Cocina
+- Reportes y auditoría de operaciones
+
+---
+
+## 🏗️ Arquitectura
+
+### Stack Tecnológico
+
+**Backend:**
+
+- ASP.NET Core 9.0 Web API + MVC
+- Entity Framework Core
+- Identity + JWT para autenticación
+
+**Frontend Web:**
+
+- ASP.NET Core MVC (Razor)
+- Bootstrap 5
+
+**App Móvil (previsto):**
+
+- Android (Kotlin, MVVM)
+- Retrofit, Room, FCM
+
+**Base de Datos:**
+
+- SQL Server / PostgreSQL
+
+---
+
+## 📂 Estructura del Proyecto
+
+```
+windsurf-project/
+│
+├── ProyectoCronoVianda.sln              # Solución principal
+│
+├── ProyectoCronoVianda.Web/             # Aplicación web MVC + API
+│   ├── Controllers/                     # Controladores MVC y API
+│   ├── Views/                           # Vistas Razor
+│   ├── wwwroot/                         # Assets estáticos
+│   └── Program.cs                       # Punto de entrada
+│
+├── ProyectoCronoVianda.Core/            # Capa de dominio
+│   ├── Models/                          # Modelos de dominio
+│   ├── Interfaces/                      # Contratos de servicio
+│   ├── Services/                        # Lógica de negocio
+│   ├── DTOs/                            # Data Transfer Objects
+│   └── ...
+│
+└── .vscode/Docs/                        # Documentación del proyecto
+    ├── ProyectoCronogramaViandas_Presentacion.md
+    ├── ProyectoCronogramaViandas_Gantt_QA.md
+    ├── Proyecto_Cronograma_Viandas_MVP1.md
+    └── img/                             # Diagramas UML (PlantUML)
+        ├── diagrama_casos_uso_general.puml
+        ├── diagrama_clases_cronograma_viandas.puml
+        ├── ui_mockups_cronograma_viandas.puml
+        └── gantt_proyecto.puml
+```
+
+---
+
+## 📖 Documentación
+
+La documentación completa del proyecto se encuentra en `.vscode/Docs/`:
+
+- **[ProyectoCronogramaViandas_Presentacion.md](.vscode/Docs/ProyectoCronogramaViandas_Presentacion.md)**  
+  Documento de presentación formal con estructura académica: introducción, justificación, objetivos, alcance, requerimientos, análisis y diseño.
+
+- **[ProyectoCronogramaViandas_Gantt_QA.md](.vscode/Docs/ProyectoCronogramaViandas_Gantt_QA.md)**  
+  Planificación temporal (Gantt) y plan de pruebas (QA).
+
+- **[Proyecto_Cronograma_Viandas_MVP1.md](.vscode/Docs/Proyecto_Cronograma_Viandas_MVP1.md)**  
+  Especificación detallada del MVP (primera entrega).
+
+### Diagramas UML
+
+Los diagramas están en formato PlantUML (`.puml`) en `.vscode/Docs/img/`:
+
+- **Casos de Uso**: `diagrama_casos_uso_general.puml`
+- **Diagrama de Clases**: `diagrama_clases_cronograma_viandas.puml`
+- **Mockups de UI**: `ui_mockups_cronograma_viandas.puml`
+- **Gantt del Proyecto**: `gantt_proyecto.puml`
+
+Para exportar a PNG/PDF, usá [PlantUML](https://plantuml.com/) o la extensión de VS Code.
+
+---
+
+## 🚀 Cómo ejecutar el proyecto
+
+### Requisitos previos
+
+- .NET SDK 9.0 o superior
+- SQL Server / PostgreSQL (según configuración)
+- Visual Studio 2022 / VS Code / Rider
+
+### Pasos
+
+1. **Clonar el repositorio:**
+
+   ```bash
+   git clone https://github.com/jesusemanuel87/LABIII-Proyecto-Final.git
+   cd LABIII-Proyecto-Final
+   ```
+
+2. **Restaurar dependencias:**
+
+   ```bash
+   dotnet restore
+   ```
+
+3. **Ejecutar el proyecto web:**
+
+   ```bash
+   dotnet run --project ProyectoCronoVianda.Web/ProyectoCronoVianda.Web.csproj
+   ```
+
+4. **Acceder a la aplicación:**
+
+   Abrí el navegador en:
+
+   - https://localhost:5001 (HTTPS)
+   - http://localhost:5000 (HTTP)
+
+---
+
+## 🎯 Alcance del MVP1 (Primera Entrega)
+
+- ✅ Autenticación y roles básicos (Admin, Jefe Servicio, Jefe Cocina, Empleado)
+- ✅ CRUD de Empleados, Servicios, Turnos, Tipos de Vianda, Tipos de Dieta
+- ✅ Gestión de cronogramas mensuales por servicio
+- ✅ Generación automática de viandas según turnos y reglas de horario
+- ✅ Flujo de aprobación/rechazo de viandas por Jefe de Cocina
+- ✅ Gestión de solicitudes de cambio de turno por empleados
+- ✅ Registro de inasistencias con adjunto de certificado
+- ✅ Notificaciones básicas (FCM)
+- ✅ Reportes básicos (PDF/Excel) y auditoría
+
+---
+
+## 👥 Actores del Sistema
+
+- **Administrador**: Configura servicios, horarios, roles, usuarios.
+- **Jefe de Servicio**: Gestiona cronogramas mensuales, aprueba solicitudes de cambio.
+- **Jefe de Cocina**: Gestiona menús/dietas, aprueba viandas generadas.
+- **Empleado**: Consulta cronograma, solicita cambios de turno, informa inasistencias.
+- **Bachero**: Consulta lista de viandas del día (confirmación por app en segunda entrega).
+
+---
+
+## 📝 Autor
+
+**Laboratorio de Computación III**  
+Universidad Tecnológica Nacional - Facultad Regional Resistencia  
+Año: 2025
+
+---
+
+## 📄 Licencia
+
+Este proyecto es de uso académico.
