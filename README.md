@@ -99,13 +99,62 @@ Para exportar a PNG/PDF, usá [PlantUML](https://plantuml.com/) o la extensión 
 
 ---
 
+## 💾 Instalación de la Base de Datos
+
+El proyecto utiliza **Entity Framework Core** con SQL Server LocalDB por defecto. Para configurar la base de datos:
+
+### Opción 1: SQL Server LocalDB (Recomendado para desarrollo)
+
+La cadena de conexión por defecto en `appsettings.json` usa LocalDB:
+
+```json
+"DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=CronogramaViandasDB;Trusted_Connection=true;MultipleActiveResultSets=true"
+```
+
+**Crear/actualizar la base de datos:**
+
+```bash
+dotnet ef database update --project ProyectoCronoVianda.Web
+```
+
+Este comando aplica todas las migraciones y crea la base de datos automáticamente.
+
+### Opción 2: SQL Server completo
+
+Si preferís usar SQL Server completo, modificá la cadena de conexión en `appsettings.json`:
+
+```json
+"DefaultConnection": "Server=localhost;Database=CronogramaViandasDB;User Id=tu_usuario;Password=tu_password;TrustServerCertificate=true"
+```
+
+Luego ejecutá el comando de migración:
+
+```bash
+dotnet ef database update --project ProyectoCronoVianda.Web
+```
+
+### Verificar migraciones disponibles
+
+```bash
+dotnet ef migrations list --project ProyectoCronoVianda.Web
+```
+
+### Crear nuevas migraciones (solo si modificaste los modelos)
+
+```bash
+dotnet ef migrations add NombreMigracion --project ProyectoCronoVianda.Web
+```
+
+---
+
 ## 🚀 Cómo ejecutar el proyecto
 
 ### Requisitos previos
 
 - .NET SDK 9.0 o superior
-- SQL Server / PostgreSQL (según configuración)
+- SQL Server LocalDB (incluido con Visual Studio) o SQL Server completo
 - Visual Studio 2022 / VS Code / Rider
+- EF Core CLI: `dotnet tool install --global dotnet-ef` (si no está instalado)
 
 ### Pasos
 
@@ -122,18 +171,25 @@ Para exportar a PNG/PDF, usá [PlantUML](https://plantuml.com/) o la extensión 
    dotnet restore
    ```
 
-3. **Ejecutar el proyecto web:**
+3. **Configurar y crear la base de datos:**
+
+   ```bash
+   dotnet ef database update --project ProyectoCronoVianda.Web
+   ```
+
+4. **Ejecutar el proyecto web:**
 
    ```bash
    dotnet run --project ProyectoCronoVianda.Web/ProyectoCronoVianda.Web.csproj
    ```
 
-4. **Acceder a la aplicación:**
+5. **Acceder a la aplicación:**
 
    Abrí el navegador en:
 
    - https://localhost:5001 (HTTPS)
    - http://localhost:5000 (HTTP)
+   - API REST: https://localhost:5001/api/servicios
 
 ---
 
