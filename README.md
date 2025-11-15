@@ -32,7 +32,7 @@ El sistema abarca:
 **App Móvil (previsto):**
 
 - Android (Kotlin, MVVM)
-- Retrofit, Room, FCM
+- Retrofit, Room, SignalR
 
 **Base de Datos:**
 
@@ -43,7 +43,7 @@ El sistema abarca:
 ## 📂 Estructura del Proyecto
 
 ```
-windsurf-project/
+LABIII-Proyecto-Final/
 │
 ├── ProyectoCronoVianda.sln              # Solución principal
 │
@@ -80,22 +80,32 @@ La documentación completa del proyecto se encuentra en `.vscode/Docs/`:
 - **[ProyectoCronogramaViandas_Presentacion.md](.vscode/Docs/ProyectoCronogramaViandas_Presentacion.md)**  
   Documento de presentación formal con estructura académica: introducción, justificación, objetivos, alcance, requerimientos, análisis y diseño.
 
+- **[ProyectoCronogramaViandas_MVP1.md](.vscode/Docs/ProyectoCronogramaViandas_MVP1.md)**  
+  Especificación detallada del MVP1 (primera entrega).
+
+- **[ProyectoCronogramaViandas_MVP2.md](.vscode/Docs/ProyectoCronogramaViandas_MVP2.md)**  
+  Especificación de la segunda entrega: Interfaz Web completa, SignalR, reportes avanzados, entregas excepcionales.
+
 - **[ProyectoCronogramaViandas_Gantt_QA.md](.vscode/Docs/ProyectoCronogramaViandas_Gantt_QA.md)**  
   Planificación temporal (Gantt) y plan de pruebas (QA).
 
-- **[Proyecto_Cronograma_Viandas_MVP1.md](.vscode/Docs/Proyecto_Cronograma_Viandas_MVP1.md)**  
-  Especificación detallada del MVP (primera entrega).
+- **[Manual_Usuario.md](.vscode/Docs/Manual_Usuario.md)**  
+  Guía de uso del sistema para todos los roles (Administrador, Jefe Servicio, Jefe Cocina, Empleado, Bachero).
+
+- **[API_Documentation.md](.vscode/Docs/API_Documentation.md)**  
+  Documentación completa de la API REST con todos los endpoints.
+
+- **[README_Documentacion.md](.vscode/Docs/README_Documentacion.md)**  
+  Índice maestro de toda la documentación del proyecto.
 
 ### Diagramas UML
 
-Los diagramas están en formato PlantUML (`.puml`) en `.vscode/Docs/img/`:
+Los diagramas están en formato PlantUML (`.puml`) y (`.png`) en `.vscode/Docs/img/`:
 
 - **Casos de Uso**: `diagrama_casos_uso_general.puml`
 - **Diagrama de Clases**: `diagrama_clases_cronograma_viandas.puml`
 - **Mockups de UI**: `ui_mockups_cronograma_viandas.puml`
 - **Gantt del Proyecto**: `gantt_proyecto.puml`
-
-Para exportar a PNG/PDF, usá [PlantUML](https://plantuml.com/) o la extensión de VS Code.
 
 ---
 
@@ -202,7 +212,7 @@ dotnet ef migrations add NombreMigracion --project ProyectoCronoVianda.Web
 - ✅ Flujo de aprobación/rechazo de viandas por Jefe de Cocina
 - ✅ Gestión de solicitudes de cambio de turno por empleados
 - ✅ Registro de inasistencias con adjunto de certificado
-- ✅ Notificaciones básicas (FCM)
+- ✅ Notificaciones en tiempo real (SignalR)
 - ✅ Reportes básicos (PDF/Excel) y auditoría
 
 ---

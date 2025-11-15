@@ -1,0 +1,360 @@
+@startuml DiagramaClasesCronogramaViandas
+!theme plain
+title Sistema de Cronograma y Viandas - Diagrama de Clases
+
+' Entidades de Usuarios y Seguridad
+class Usuario {
+    +int Id
+    +string Username
+    +string PasswordHash
+    +string Email
+    +bool IsActive
+    +DateTime CreatedAt
+    +DateTime? LastLogin
+    --
+    +ICollection<Rol> Roles
+    +Empleado Empleado
+}
+
+class Rol {
+    +int Id
+    +string Nombre
+    +string Descripcion
+    --
+    +ICollection<Usuario> Usuarios
+}
+
+class Empleado {
+    +int Id
+    +string Nombre
+    +string Apellido
+    +string DNI
+    +string CodigoBarras
+    +int ServicioId
+    +int TipoDietaId
+    +string AvatarUrl
+    +bool Activo
+    --
+    +Servicio Servicio
+    +TipoDieta TipoDieta
+    +Usuario Usuario
+    +ICollection<CronogramaItem> CronogramaItems
+    +ICollection<AsignacionVianda> Viandas
+    +ICollection<SolicitudCambioTurno> Solicitudes
+    +ICollection<Inasistencia> Inasistencias
+}
+
+' Entidades de Organización
+class Servicio {
+    +int Id
+    +string Nombre
+    +string Descripcion
+    +bool Activo
+    --
+    +ICollection<Empleado> Empleados
+    +ICollection<Cronograma> Cronogramas
+    +ICollection<ConfiguracionServicioTurno> Configuraciones
+}
+
+class Turno {
+    +int Id
+    +string Nombre
+    +string Descripcion
+    +TimeSpan HoraInicioDefault
+    +TimeSpan HoraFinDefault
+    --
+    +ICollection<ConfiguracionServicioTurno> Configuraciones
+    +ICollection<CronogramaItem> CronogramaItems
+}
+
+class ConfiguracionServicioTurno {
+    +int Id
+    +int ServicioId
+    +int TurnoId
+    +TimeSpan HoraInicio
+    +TimeSpan HoraFin
+    --
+    +Servicio Servicio
+    +Turno Turno
+}
+
+' Entidades de Cronograma
+class Cronograma {
+    +int Id
+    +int ServicioId
+    +int Mes
+    +int Año
+    +EstadoCronograma Estado
+    +DateTime CreatedAt
+    +int CreatedBy
+    --
+    +Servicio Servicio
+    +ICollection<CronogramaItem> Items
+}
+
+class CronogramaItem {
+    +int Id
+    +int CronogramaId
+    +int EmpleadoId
+    +DateTime Fecha
+    +int TurnoId
+    +EstadoItem Estado
+    +DateTime CreatedAt
+    +int CreatedBy
+    +DateTime? ModifiedAt
+    +int? ModifiedBy
+    --
+    +Cronograma Cronograma
+    +Empleado Empleado
+    +Turno Turno
+    +ICollection<AsignacionVianda> Viandas
+}
+
+' Entidades de Viandas
+class TipoVianda {
+    +int Id
+    +string Nombre
+    +string Descripcion
+    +TimeSpan HoraInicio
+    +TimeSpan HoraFin
+    +bool Activo
+    --
+    +ICollection<Menu> Menus
+    +ICollection<AsignacionVianda> Asignaciones
+    +ICollection<VentanaCambio> VentanasCambio
+}
+
+class TipoDieta {
+    +int Id
+    +string Nombre
+    +string Descripcion
+    +bool Activo
+    --
+    +ICollection<Empleado> Empleados
+    +ICollection<Menu> Menus
+}
+
+class Menu {
+    +int Id
+    +string Nombre
+    +string Descripcion
+    +int TipoViandaId
+    +int TipoDietaId
+    +DateTime FechaDesde
+    +DateTime FechaHasta
+    +bool Activo
+    --
+    +TipoVianda TipoVianda
+    +TipoDieta TipoDieta
+    +ICollection<AsignacionVianda> Asignaciones
+}
+
+class AsignacionVianda {
+    +int Id
+    +int CronogramaItemId
+    +int TipoViandaId
+    +int MenuId
+    +DateTime FechaAsignacion
+    +EstadoVianda Estado
+    +string Observaciones
+    +DateTime? FechaAprobacion
+    +int? AprobadoPorUserId
+    +DateTime CreatedAt
+    --
+    +CronogramaItem CronogramaItem
+    +TipoVianda TipoVianda
+    +Menu Menu
+    +Usuario AprobadoPor
+    +ConfirmacionEntrega Confirmacion
+}
+
+' Entidades de Configuración
+class VentanaCambio {
+    +int Id
+    +int ServicioId
+    +int TipoViandaId
+    +TimeSpan HoraLimiteCambio
+    +string Descripcion
+    --
+    +Servicio Servicio
+    +TipoVianda TipoVianda
+}
+
+' Entidades de Solicitudes
+class SolicitudCambioTurno {
+    +int Id
+    +int EmpleadoId
+    +DateTime FechaSolicitada
+    +int TurnoOrigenId
+    +int TurnoDestinoId
+    +string Motivo
+    +int? EmpleadoSugeridoId
+    +EstadoSolicitud Estado
+    +DateTime FechaSolicitud
+    +DateTime? FechaRespuesta
+    +int? RespondidoPorUserId
+    +string ObservacionesRespuesta
+    --
+    +Empleado Empleado
+    +Turno TurnoOrigen
+    +Turno TurnoDestino
+    +Empleado EmpleadoSugerido
+    +Usuario RespondidoPor
+}
+
+class Inasistencia {
+    +int Id
+    +int EmpleadoId
+    +DateTime FechaDesde
+    +DateTime FechaHasta
+    +string Motivo
+    +string ArchivoSoporteUrl
+    +EstadoInasistencia Estado
+    +DateTime FechaNotificacion
+    +DateTime? FechaRevision
+    +int? RevisadoPorUserId
+    --
+    +Empleado Empleado
+    +Usuario RevisadoPor
+}
+
+' MVP2: Nuevas Entidades
+class EntregaExcepcional {
+    +int Id
+    +DateTime FechaDesde
+    +DateTime FechaHasta
+    +int TipoViandaId
+    +int TipoDietaId
+    +int? EmpleadoId
+    +int? PersonalVisitaId
+    +int Cantidad
+    +string Observaciones
+    +EstadoEntrega Estado
+    +DateTime CreatedAt
+    +int CreatedBy
+    --
+    +TipoVianda TipoVianda
+    +TipoDieta TipoDieta
+    +Empleado Empleado
+    +PersonalVisita PersonalVisita
+    +Usuario CreatedByUser
+}
+
+class PersonalVisita {
+    +int Id
+    +string NombreCompleto
+    +string DNI
+    +string Institucion
+    +DateTime FechaVisita
+    +string Motivo
+    +DateTime CreatedAt
+    +int CreatedBy
+    --
+    +ICollection<EntregaExcepcional> EntregasExcepcionales
+}
+
+class ConfirmacionEntrega {
+    +int Id
+    +int AsignacionViandaId
+    +DateTime FechaHoraConfirmacion
+    +int ConfirmadoPorUserId
+    +string FotoEvidenciaUrl
+    +string Observaciones
+    --
+    +AsignacionVianda AsignacionVianda
+    +Usuario ConfirmadoPor
+}
+
+' Entidad de Auditoría
+class AuditLog {
+    +int Id
+    +string EntityName
+    +int EntityId
+    +string Action
+    +string Changes
+    +int UserId
+    +DateTime Timestamp
+    +string IpAddress
+    --
+    +Usuario Usuario
+}
+
+' Enums
+enum EstadoCronograma {
+    BORRADOR
+    PUBLICADO
+    CERRADO
+}
+
+enum EstadoItem {
+    ACTIVO
+    REEMPLAZADO
+    CANCELADO
+}
+
+enum EstadoVianda {
+    PENDIENTE
+    APROBADA
+    RECHAZADA
+}
+
+enum EstadoSolicitud {
+    PENDIENTE
+    APROBADA
+    RECHAZADA
+}
+
+enum EstadoInasistencia {
+    PENDIENTE
+    REVISADA
+    APROBADA
+    RECHAZADA
+}
+
+enum EstadoEntrega {
+    PENDIENTE
+    ENTREGADA
+    NO_RETIRADA
+    CANCELADA
+}
+
+' Relaciones principales
+Usuario "1" -- "*" Rol
+Usuario "1" -- "0..1" Empleado
+Empleado "*" -- "1" Servicio
+Empleado "*" -- "1" TipoDieta
+Servicio "1" -- "*" Cronograma
+Servicio "1" -- "*" ConfiguracionServicioTurno
+Turno "1" -- "*" ConfiguracionServicioTurno
+Cronograma "1" -- "*" CronogramaItem
+CronogramaItem "*" -- "1" Empleado
+CronogramaItem "*" -- "1" Turno
+CronogramaItem "1" -- "*" AsignacionVianda
+AsignacionVianda "*" -- "1" TipoVianda
+AsignacionVianda "*" -- "1" Menu
+Menu "*" -- "1" TipoVianda
+Menu "*" -- "1" TipoDieta
+VentanaCambio "*" -- "1" Servicio
+VentanaCambio "*" -- "1" TipoVianda
+SolicitudCambioTurno "*" -- "1" Empleado
+Inasistencia "*" -- "1" Empleado
+AsignacionVianda "1" -- "0..1" ConfirmacionEntrega
+EntregaExcepcional "*" -- "0..1" PersonalVisita
+EntregaExcepcional "*" -- "0..1" Empleado
+
+note right of AsignacionVianda
+  Estado: PENDIENTE -> APROBADA/RECHAZADA
+  Aprobación por Jefe de Cocina
+end note
+
+note right of VentanaCambio
+  Define hasta qué hora se pueden
+  hacer cambios el mismo día
+end note
+
+note bottom of ConfirmacionEntrega
+  MVP2: Confirmación de entrega
+  por parte del Bachero
+end note
+
+@enduml

@@ -2,9 +2,9 @@
 
 ## Presentación
 
-**Alumno:** [Nombre del alumno]
+**Alumno:** [Jesús Emanuel GArcía]
 
-**Fecha:** [dd/mm/aaaa]
+**Fecha:** [15/11/2025]
 
 ---
 
@@ -115,9 +115,8 @@ En resumen, el proyecto aporta **interés**, **utilidad** y **factibilidad**, al
 
 Diseñar y desarrollar un **prototipo de sistema de información** que integre la gestión de cronogramas laborales, asignación de viandas, control de dietas, inasistencias y solicitudes de cambio de turno para el personal hospitalario, brindando herramientas de administración, consulta y reporte a los distintos actores involucrados.
 
-_(Opcional: aquí se puede adjuntar un diagrama de Gantt de actividades del proyecto en el Anexo.)_
 
----
+![Diagrama de Gantt del Proyecto](./img/GanttCronogramaViandas.png)
 
 ## Objetivos específicos del proyecto
 
@@ -166,18 +165,23 @@ Dentro del límite definido, el sistema contempla, en términos generales, los s
 - Consulta del cronograma personal por parte del empleado.
 - Emisión de reportes básicos y auditoría de cambios.
 
-_(En esta sección solo se nombran los procesos; el detalle se desarrolla luego en el análisis.)_
-
 ---
 
 ## No Contemplado
 
-Procesos que se encuentran dentro del límite general del sistema, pero que **no** se implementan en esta primera entrega (MVP1):
+Procesos que se encuentran dentro del límite general del sistema, pero que **no** se implementan en esta primera entrega (ver detalle completo en [ProyectoCronogramaViandas_MVP1.md](./ProyectoCronogramaViandas_MVP1.md)):
 
 - Confirmación de entrega de viandas por parte del Bachero vía aplicación móvil.
 - Módulo móvil completo para Jefe de Cocina (en MVP1 se limita a interfaz web).
 - Gestión avanzada de entregas excepcionales a personal de visita (alta de personas "ad hoc").
 - Reportes avanzados y tableros de BI (más allá de los reportes básicos definidos).
+
+**Segunda Entrega:**
+
+En la segunda entrega se implementará:
+
+- Interfaz Web completa (Web Service) para todos los roles del sistema.
+- Integración con SignalR para notificaciones en tiempo real y actualización dinámica de datos.
 
 ---
 
@@ -196,9 +200,9 @@ Procesos que se encuentran dentro del límite general del sistema, pero que **no
 
 **App Móvil:**
 
-- Android (Kotlin, patrón MVVM).
+- Android (patrón MVVM).
 - Retrofit para consumo de APIs REST.
-- FCM (Firebase Cloud Messaging) para notificaciones push.
+- SignalR para notificaciones en tiempo real y comunicación bidireccional.
 
 **Base de datos:**
 
@@ -226,9 +230,6 @@ Sin embargo, la propuesta se diferencia por:
 - Integración directa con app móvil para empleados y Jefes de Servicio.
 - Parametrización detallada de **ventanas de entrega** y **ventanas de cambio** por servicio, tipo de vianda y turno.
 
-_(Se puede agregar una tabla comparativa en el Anexo I, una vez relevados productos concretos.)_
-
----
 
 ## Listado de Requerimientos funcionales
 
@@ -267,7 +268,6 @@ Basado en el documento **MVP1**:
   - App Android compatible con versiones actuales del sistema operativo (según decisión).
 - **Seguridad:**
   - Autenticación con Identity + JWT.
-  - Uso obligatorio de HTTPS.
   - Control de acceso basado en roles y claims.
 - **Auditoría y trazabilidad:**
   - Registro de eventos en `AuditLog`.
@@ -280,13 +280,40 @@ Basado en el documento **MVP1**:
 
 ### Análisis y Diseño
 
-En esta sección se documentarán los modelos UML y decisiones de diseño más importantes:
+El desarrollo del prototipo se basa en un análisis exhaustivo documentado en los siguientes archivos técnicos:
 
-- Modelo de dominio (entidades y relaciones principales).
-- Arquitectura en capas: API, lógica de negocio, acceso a datos.
-- Flujos principales (secuencia) para: generación de viandas, aprobación, cambios de turno, inasistencias.
+- **[ProyectoCronogramaViandas_MVP1.md](./ProyectoCronogramaViandas_MVP1.md)**: Define el alcance completo de la primera entrega, incluyendo requerimientos funcionales y no funcionales, arquitectura propuesta, modelo de datos, reglas de negocio y endpoints de la API REST.
 
-Se apoyará en los documentos de análisis existentes (`Proyecto_Cronograma_Viandas_MVP1.md`, `Proyecto_Cronograma_Viandas_Hospital_v2.md`).
+- **[ProyectoCronogramaViandas_Gantt_QA.md](./ProyectoCronogramaViandas_Gantt_QA.md)**: Contiene el cronograma detallado del proyecto (diagrama de Gantt) y el plan de pruebas (QA) para asegurar la calidad del sistema.
+
+**Decisiones de diseño principales:**
+
+1. **Arquitectura en capas:**
+   - **Capa de presentación**: App Android (MVVM) + Panel Web (MVC/React/Blazor)
+   - **Capa de API**: ASP.NET Core Web API con endpoints REST
+   - **Capa de lógica de negocio**: Servicios que implementan reglas de cronograma, viandas y ventanas de cambio
+   - **Capa de acceso a datos**: Entity Framework Core con patrón Repository
+
+2. **Modelo de dominio:**
+   - **Entidades principales**: Usuario, Rol, Empleado, Servicio, Turno, Cronograma, CronogramaItem, TipoVianda, TipoDieta, Menu, AsignacionVianda, VentanaCambio, SolicitudCambioTurno, Inasistencia, AuditLog
+   - **Relaciones clave**: Un Servicio tiene múltiples Empleados; un Cronograma tiene múltiples CronogramaItems; cada AsignacionVianda se genera desde un CronogramaItem considerando las VentanaCambio configuradas
+
+3. **Flujos críticos:**
+   - **Generación de viandas**: A partir del cronograma mensual, el sistema genera automáticamente AsignacionVianda en estado PENDIENTE respetando horarios configurados por TipoVianda y Servicio
+   - **Aprobación de viandas**: El Jefe de Cocina revisa y aprueba/rechaza las viandas generadas
+   - **Gestión de cambios de turno**: Los empleados solicitan cambios vía app; el Jefe de Servicio aprueba/rechaza respetando las VentanaCambio configuradas
+   - **Registro de inasistencias**: Los empleados informan inasistencias con adjunto de certificado; el sistema notifica al Jefe de Servicio
+
+4. **Seguridad y autenticación:**
+   - ASP.NET Core Identity para gestión de usuarios
+   - JWT (JSON Web Tokens) para autenticación en la API
+   - Control de acceso basado en roles (Administrador, Jefe de Servicio, Jefe de Cocina, Bachero, Empleado)
+   - Empleados autentican con DNI + contraseña
+
+5. **Parametrización y configurabilidad:**
+   - Horarios de entrega por TipoVianda (desayuno, almuerzo, merienda, cena) configurables por Servicio
+   - Ventanas límite de cambio (`VentanaCambio`) parametrizables para controlar hasta qué hora se pueden hacer modificaciones el mismo día
+   - Tipos de dieta personalizables (normal, blanda, diabético, etc.)
 
 ---
 
@@ -297,10 +324,8 @@ A continuación se incluirán las imágenes de los casos de uso más importantes
 - **Diagrama de casos de uso general** (Administración, Jefe de Servicio, Jefe de Cocina, Empleado, Bachero).
 
 ```markdown
-![Diagrama de Casos de Uso](./img/diagrama_casos_uso_general.png)
+![Diagrama de Casos de Uso](./img/DiagramaCasosUsoGeneral.png)
 ```
-
-_(Crear el diagrama en la herramienta UML de tu elección y guardar la imagen en `.vscode/Docs/img/diagrama_casos_uso_general.png` o ruta similar.)_
 
 ---
 
@@ -311,10 +336,8 @@ Se incluirá un diagrama de clases que refleje las entidades principales:
 - Usuario, Rol, Empleado, Servicio, Turno, Cronograma, CronogramaItem, TipoVianda, TipoDieta, Menu, AsignacionVianda, VentanaCambio, SolicitudCambioTurno, Inasistencia, AuditLog.
 
 ```markdown
-![Diagrama de Clases](./img/diagrama_clases_cronograma_viandas.png)
+![Diagrama de Clases](./img/DiagramaClasesCronogramaViandas.png)
 ```
-
-_(Guardar la imagen en la carpeta `img` del proyecto de documentación.)_
 
 ---
 
@@ -346,12 +369,9 @@ _(Los mockups pueden ser bocetos realizados en herramientas como Figma, Draw.io,
 
 ## Bibliografía
 
-- Documentación propia del proyecto: archivos en `.vscode/Docs`.
 - Material de la cátedra sobre análisis y diseño de sistemas.
 - Documentación oficial de ASP.NET Core y Entity Framework Core.
 - Documentación de Android (Kotlin, Retrofit, Room, FCM).
-
-_(Agregar referencias específicas según los textos utilizados.)_
 
 ---
 
@@ -360,6 +380,5 @@ _(Agregar referencias específicas según los textos utilizados.)_
 En el Anexo se pueden incluir:
 
 - Gantt detallado del proyecto.
-- Tablas comparativas de competencia.
 - Detalle ampliado de casos de uso.
 - Capturas adicionales de interfaz o prototipos.

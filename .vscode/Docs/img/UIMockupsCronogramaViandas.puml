@@ -1,0 +1,199 @@
+@startuml UIMockupsCronogramaViandas
+!theme plain
+title Sistema de Cronograma y Viandas - Mockups de UI
+
+' Mockup Web: Dashboard Administrador
+salt
+{
+  <b>Sistema de Cronograma y Viandas | Administrador | [Logout]
+  {
+    {T
+      + Dashboard | Empleados | Servicios | Turnos | Viandas | Reportes | Configuración
+    }
+  }
+  --
+  {
+    {+
+      <&dashboard> Dashboard General
+      ====
+      {
+        [Empleados Activos: 124] | [Servicios: 8] | [Viandas Hoy: 87] | [Solicitudes Pendientes: 5]
+      }
+      --
+      {
+        <b>Viandas del Mes | <b>Solicitudes de Cambio
+        {T
+          ! | Desayuno | Almuerzo | Merienda | Cena
+          Aprobadas | 450 | 520 | 380 | 490
+          Pendientes | 12 | 8 | 15 | 10
+          Rechazadas | 3 | 2 | 1 | 2
+        } | 
+        {T
+          ! | Estado | Cantidad
+          Pendientes | <&warning> | 5
+          Aprobadas | <&check> | 42
+          Rechazadas | <&x> | 8
+        }
+      }
+    }
+  }
+  [Ver Reportes Completos]
+}
+@endsalt
+
+' Mockup Web: Panel Jefe de Servicio
+salt
+{
+  <b>Sistema de Cronograma y Viandas | Jefe de Servicio - Enfermería | [Logout]
+  {
+    {T
+      + Mi Servicio | Cronograma | Solicitudes | Inasistencias | Viandas | Reportes
+    }
+  }
+  --
+  {
+    {+
+      <&calendar> Cronograma Mensual - Noviembre 2025
+      ====
+      {
+        [< Octubre] | <b>Noviembre 2025 | [Diciembre >]
+      }
+      --
+      {T
+        ! | Lun | Mar | Mié | Jue | Vie | Sáb | Dom
+        Sem 1 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+        .. | García M | López T | García M | Pérez N | García M | López T | Pérez N
+        .. | Martínez T | Rodríguez N | López T | Sánchez M | Martínez T | García M | Gómez T
+        Sem 2 | 8 | 9 | 10 | 11 | 12 | 13 | 14
+        Sem 3 | 15 | 16 | 17 | 18 | 19 | 20 | 21
+        Sem 4 | 22 | 23 | 24 | 25 | 26 | 27 | 28
+      }
+      --
+      [ <&plus> Crear Cronograma ] | [ <&pencil> Editar ] | [ <&eye> Vista Detallada ]
+    }
+  }
+  --
+  {
+    <b>Solicitudes de Cambio Pendientes (3)
+    {T
+      ! | Empleado | Fecha | Turno Actual | Turno Deseado | Motivo | Acciones
+      1 | García, María | 15/11 | Mañana | Tarde | Trámite personal | [<&check> Aprobar] [<&x> Rechazar]
+      2 | López, Juan | 18/11 | Tarde | Noche | Cambio con compañero | [<&check> Aprobar] [<&x> Rechazar]
+      3 | Pérez, Ana | 20/11 | Noche | Mañana | Motivo de salud | [<&check> Aprobar] [<&x> Rechazar]
+    }
+  }
+}
+@endsalt
+
+' Mockup Web: Panel Jefe de Cocina
+salt
+{
+  <b>Sistema de Cronograma y Viandas | Jefe de Cocina | [Logout]
+  {
+    {T
+      + Dashboard | Viandas Pendientes | Menús | Dietas | Entregas Excepcionales | Reportes
+    }
+  }
+  --
+  {
+    {+
+      <&task> Viandas Pendientes de Aprobación (23)
+      ====
+      {
+        {T
+          ! | Fecha | Servicio | Empleado | Turno | Tipo Vianda | Dieta | Menú | Acciones
+          [x] | 15/11 | Enfermería | García, M. | Mañana | Desayuno | Normal | Café + Medialunas | [<&check>] [<&x>]
+          [x] | 15/11 | Enfermería | López, J. | Mañana | Desayuno | Blanda | Té + Tostadas | [<&check>] [<&x>]
+          [ ] | 15/11 | Guardia | Pérez, A. | Tarde | Almuerzo | Diabético | Pollo con verduras | [<&check>] [<&x>]
+          [ ] | 15/11 | Laboratorio | Martínez, L. | Tarde | Almuerzo | Normal | Milanesa con puré | [<&check>] [<&x>]
+          [ ] | 15/11 | Radiología | Gómez, C. | Noche | Cena | Normal | Sopa + Sandwich | [<&check>] [<&x>]
+        }
+      }
+      --
+      [<&check> Aprobar Seleccionadas] | [<&x> Rechazar Seleccionadas] | [<&reload> Actualizar]
+    }
+  }
+  --
+  {
+    <b>Resumen del Día
+    Pendientes: <&warning> 23 | Aprobadas: <&check> 54 | Rechazadas: <&x> 2
+  }
+}
+@endsalt
+
+' Mockup App Android: Empleado
+salt
+{
+  {
+    .    <&signal> 15:30    <&battery-full>
+    --
+    <b>Cronograma Viandas
+    { <&chevron-left> | [<&person> Mi Perfil] | [<&bell> 3] }
+    ====
+    <&calendar> Mi Cronograma
+    --
+    <b>Noviembre 2025
+    {T
+      ! | L | M | M | J | V | S | D
+      Sem 1 | 1 | 2 | 3 | 4 | 5 | 6 | 7
+      .. | | | | | M | T | N
+      Sem 2 | 8 | 9 | 10 | 11 | 12 | 13 | 14
+      .. | M | T | M | T | M | T | N
+      Sem 3 | 15 | 16 | 17 | 18 | 19 | 20 | 21
+      .. | <color:red>M* | T | M | T | M | T | N
+    }
+    <color:red>* = Solicitud de cambio pendiente
+    --
+    {
+      [<&calendar> Ver Detalle] | [<&plus> Solicitar Cambio] | [<&warning> Inasistencia]
+    }
+    ====
+    <b>Mis Solicitudes
+    {T
+      ! | Fecha | Estado
+      18/11 | <&warning> Pendiente
+      05/11 | <&check> Aprobada
+      28/10 | <&x> Rechazada
+    }
+    --
+    [ Ver Historial Completo ]
+  }
+}
+@endsalt
+
+' Mockup App Android: Bachero
+salt
+{
+  {
+    .    <&signal> 08:15    <&battery-full>
+    --
+    <b>Entregas del Día
+    { <&chevron-left> | [<&list> Listados] | [<&reload>] }
+    ====
+    <b>Desayuno (07:00 - 10:00)
+    --
+    {T
+      ! | Servicio | Empleado | Dieta | Estado
+      [x] | Enfermería | García, M. | Normal | <&check> ENTREGADO 07:45
+      [x] | Enfermería | López, J. | Blanda | <&check> ENTREGADO 07:50
+      [ ] | Guardia | Pérez, A. | Normal | <&warning> PENDIENTE
+      [ ] | Laboratorio | Martínez, L. | Diabético | <&warning> PENDIENTE
+    }
+    --
+    <b>Entregas Excepcionales (2)
+    {T
+      ! | Nombre | Institución | Dieta
+      [ ] | Dr. Fernández | Hospital Zonal | Normal
+      [ ] | Lic. Ramírez | Ministerio | Normal
+    }
+    --
+    {
+      [<&check> Confirmar Entrega] | [<&camera> Tomar Foto] | [<&qrcode> Escanear QR]
+    }
+    ====
+    Pendientes: 12 | Entregadas: 24 | Excepcionales: 2
+  }
+}
+@endsalt
+
+@enduml

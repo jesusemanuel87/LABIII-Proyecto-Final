@@ -1,0 +1,289 @@
+@startuml DiagramaERD_CronogramaViandas
+!theme plain
+title Sistema de Cronograma y Viandas - Diagrama Entidad-Relación
+
+' Configuración
+skinparam linetype ortho
+hide circle
+skinparam roundcorner 10
+
+' Entidades de Usuarios y Seguridad
+entity "Usuario" as usuario {
+  * **id** : int <<PK>>
+  --
+  * username : varchar(50)
+  * password_hash : varchar(255)
+  * email : varchar(100)
+  * is_active : boolean
+  * created_at : datetime
+  * last_login : datetime
+}
+
+entity "Rol" as rol {
+  * **id** : int <<PK>>
+  --
+  * nombre : varchar(50)
+  * descripcion : varchar(200)
+}
+
+entity "UsuarioRol" as usuario_rol {
+  * **usuario_id** : int <<FK>>
+  * **rol_id** : int <<FK>>
+}
+
+' Entidades de Personal
+entity "Empleado" as empleado {
+  * **id** : int <<PK>>
+  --
+  * nombre : varchar(100)
+  * apellido : varchar(100)
+  * dni : varchar(10) <<UNIQUE>>
+  * codigo_barras : varchar(20)
+  * servicio_id : int <<FK>>
+  * tipo_dieta_id : int <<FK>>
+  * usuario_id : int <<FK>>
+  * avatar_url : varchar(200)
+  * activo : boolean
+}
+
+' Entidades de Organización
+entity "Servicio" as servicio {
+  * **id** : int <<PK>>
+  --
+  * nombre : varchar(100)
+  * descripcion : varchar(200)
+  * activo : boolean
+}
+
+entity "Turno" as turno {
+  * **id** : int <<PK>>
+  --
+  * nombre : varchar(50)
+  * descripcion : varchar(200)
+  * hora_inicio_default : time
+  * hora_fin_default : time
+}
+
+entity "ConfiguracionServicioTurno" as config_servicio_turno {
+  * **id** : int <<PK>>
+  --
+  * servicio_id : int <<FK>>
+  * turno_id : int <<FK>>
+  * hora_inicio : time
+  * hora_fin : time
+}
+
+' Entidades de Cronograma
+entity "Cronograma" as cronograma {
+  * **id** : int <<PK>>
+  --
+  * servicio_id : int <<FK>>
+  * mes : int
+  * año : int
+  * estado : enum(BORRADOR, PUBLICADO, CERRADO)
+  * created_at : datetime
+  * created_by : int <<FK>>
+}
+
+entity "CronogramaItem" as cronograma_item {
+  * **id** : int <<PK>>
+  --
+  * cronograma_id : int <<FK>>
+  * empleado_id : int <<FK>>
+  * fecha : date
+  * turno_id : int <<FK>>
+  * estado : enum(ACTIVO, REEMPLAZADO, CANCELADO)
+  * created_at : datetime
+  * created_by : int <<FK>>
+  * modified_at : datetime
+  * modified_by : int <<FK>>
+}
+
+' Entidades de Viandas
+entity "TipoVianda" as tipo_vianda {
+  * **id** : int <<PK>>
+  --
+  * nombre : varchar(50)
+  * descripcion : varchar(200)
+  * hora_inicio : time
+  * hora_fin : time
+  * activo : boolean
+}
+
+entity "TipoDieta" as tipo_dieta {
+  * **id** : int <<PK>>
+  --
+  * nombre : varchar(50)
+  * descripcion : varchar(200)
+  * activo : boolean
+}
+
+entity "Menu" as menu {
+  * **id** : int <<PK>>
+  --
+  * nombre : varchar(100)
+  * descripcion : text
+  * tipo_vianda_id : int <<FK>>
+  * tipo_dieta_id : int <<FK>>
+  * fecha_desde : date
+  * fecha_hasta : date
+  * activo : boolean
+}
+
+entity "AsignacionVianda" as asignacion_vianda {
+  * **id** : int <<PK>>
+  --
+  * cronograma_item_id : int <<FK>>
+  * tipo_vianda_id : int <<FK>>
+  * menu_id : int <<FK>>
+  * fecha_asignacion : date
+  * estado : enum(PENDIENTE, APROBADA, RECHAZADA)
+  * observaciones : text
+  * fecha_aprobacion : datetime
+  * aprobado_por_user_id : int <<FK>>
+  * created_at : datetime
+}
+
+' Entidades de Configuración
+entity "VentanaCambio" as ventana_cambio {
+  * **id** : int <<PK>>
+  --
+  * servicio_id : int <<FK>>
+  * tipo_vianda_id : int <<FK>>
+  * hora_limite_cambio : time
+  * descripcion : varchar(200)
+}
+
+' Entidades de Solicitudes
+entity "SolicitudCambioTurno" as solicitud_cambio {
+  * **id** : int <<PK>>
+  --
+  * empleado_id : int <<FK>>
+  * fecha_solicitada : date
+  * turno_origen_id : int <<FK>>
+  * turno_destino_id : int <<FK>>
+  * motivo : text
+  * empleado_sugerido_id : int <<FK>>
+  * estado : enum(PENDIENTE, APROBADA, RECHAZADA)
+  * fecha_solicitud : datetime
+  * fecha_respuesta : datetime
+  * respondido_por_user_id : int <<FK>>
+  * observaciones_respuesta : text
+}
+
+entity "Inasistencia" as inasistencia {
+  * **id** : int <<PK>>
+  --
+  * empleado_id : int <<FK>>
+  * fecha_desde : date
+  * fecha_hasta : date
+  * motivo : text
+  * archivo_soporte_url : varchar(200)
+  * estado : enum(PENDIENTE, REVISADA, APROBADA, RECHAZADA)
+  * fecha_notificacion : datetime
+  * fecha_revision : datetime
+  * revisado_por_user_id : int <<FK>>
+}
+
+' MVP2: Nuevas Entidades
+entity "PersonalVisita" as personal_visita {
+  * **id** : int <<PK>>
+  --
+  * nombre_completo : varchar(200)
+  * dni : varchar(10)
+  * institucion : varchar(100)
+  * fecha_visita : date
+  * motivo : text
+  * created_at : datetime
+  * created_by : int <<FK>>
+}
+
+entity "EntregaExcepcional" as entrega_excepcional {
+  * **id** : int <<PK>>
+  --
+  * fecha_desde : datetime
+  * fecha_hasta : datetime
+  * tipo_vianda_id : int <<FK>>
+  * tipo_dieta_id : int <<FK>>
+  * empleado_id : int <<FK>>
+  * personal_visita_id : int <<FK>>
+  * cantidad : int
+  * observaciones : text
+  * estado : enum(PENDIENTE, ENTREGADA, CANCELADA)
+  * created_at : datetime
+  * created_by : int <<FK>>
+}
+
+entity "ConfirmacionEntrega" as confirmacion_entrega {
+  * **id** : int <<PK>>
+  --
+  * asignacion_vianda_id : int <<FK>>
+  * fecha_hora_confirmacion : datetime
+  * confirmado_por_user_id : int <<FK>>
+  * foto_evidencia_url : varchar(200)
+  * observaciones : text
+}
+
+' Entidad de Auditoría
+entity "AuditLog" as audit_log {
+  * **id** : int <<PK>>
+  --
+  * entity_name : varchar(100)
+  * entity_id : int
+  * action : varchar(50)
+  * changes : text
+  * user_id : int <<FK>>
+  * timestamp : datetime
+  * ip_address : varchar(45)
+}
+
+' Relaciones Usuarios
+usuario ||--o{ usuario_rol
+rol ||--o{ usuario_rol
+usuario ||--o| empleado
+
+' Relaciones Empleado
+empleado }o--|| servicio
+empleado }o--|| tipo_dieta
+empleado ||--o{ cronograma_item
+empleado ||--o{ solicitud_cambio
+empleado ||--o{ inasistencia
+
+' Relaciones Servicio y Turnos
+servicio ||--o{ config_servicio_turno
+turno ||--o{ config_servicio_turno
+servicio ||--o{ cronograma
+servicio ||--o{ ventana_cambio
+
+' Relaciones Cronograma
+cronograma ||--o{ cronograma_item
+cronograma_item }o--|| turno
+cronograma_item ||--o{ asignacion_vianda
+
+' Relaciones Viandas
+tipo_vianda ||--o{ menu
+tipo_vianda ||--o{ asignacion_vianda
+tipo_vianda ||--o{ ventana_cambio
+tipo_dieta ||--o{ menu
+menu ||--o{ asignacion_vianda
+asignacion_vianda }o--o| usuario
+
+' Relaciones Solicitudes
+solicitud_cambio }o--|| turno
+solicitud_cambio }o--|| turno
+solicitud_cambio }o--o| usuario
+inasistencia }o--o| usuario
+
+' MVP2: Relaciones Nuevas
+asignacion_vianda ||--o| confirmacion_entrega
+confirmacion_entrega }o--|| usuario
+entrega_excepcional }o--o| empleado
+entrega_excepcional }o--o| personal_visita
+entrega_excepcional }o--|| tipo_vianda
+entrega_excepcional }o--|| tipo_dieta
+personal_visita ||--o{ entrega_excepcional
+
+' Relaciones Auditoría
+usuario ||--o{ audit_log
+
+@enduml

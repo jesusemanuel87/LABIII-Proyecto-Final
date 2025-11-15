@@ -1,0 +1,133 @@
+@startuml DiagramaCasosUsoGeneral
+!theme plain
+title Sistema de Cronograma y Viandas - Casos de Uso General
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Administrador" as Admin
+actor "Jefe de Servicio" as JefeServ
+actor "Jefe de Cocina" as JefeCoc
+actor "Empleado" as Emp
+actor "Bachero" as Bach
+
+rectangle "Sistema de Cronograma y Viandas" {
+    
+    package "Gestión de Configuración" {
+        usecase "Gestionar Empleados" as UC01
+        usecase "Gestionar Servicios" as UC02
+        usecase "Gestionar Turnos" as UC03
+        usecase "Configurar Tipos de Vianda" as UC04
+        usecase "Configurar Tipos de Dieta" as UC05
+        usecase "Gestionar Usuarios y Roles" as UC06
+        usecase "Configurar Horarios de Entrega" as UC07
+        usecase "Configurar Ventanas de Cambio" as UC08
+    }
+    
+    package "Gestión de Cronogramas" {
+        usecase "Crear Cronograma Mensual" as UC10
+        usecase "Editar Cronograma" as UC11
+        usecase "Visualizar Cronograma" as UC12
+        usecase "Reemplazar Empleado en Turno" as UC13
+        usecase "Generar Viandas Automáticamente" as UC14
+    }
+    
+    package "Gestión de Viandas" {
+        usecase "Gestionar Menús" as UC20
+        usecase "Aprobar/Rechazar Viandas" as UC21
+        usecase "Visualizar Viandas Pendientes" as UC22
+        usecase "Gestionar Entregas Excepcionales" as UC23
+        usecase "Confirmar Entrega de Vianda" as UC24
+    }
+    
+    package "Gestión de Solicitudes" {
+        usecase "Solicitar Cambio de Turno" as UC30
+        usecase "Aprobar/Rechazar Solicitud" as UC31
+        usecase "Visualizar Estado de Solicitud" as UC32
+        usecase "Informar Inasistencia" as UC33
+        usecase "Gestionar Inasistencias" as UC34
+    }
+    
+    package "Consultas y Reportes" {
+        usecase "Ver Cronograma Personal" as UC40
+        usecase "Gestionar Perfil" as UC41
+        usecase "Generar Reportes" as UC42
+        usecase "Visualizar Dashboard" as UC43
+        usecase "Exportar Datos" as UC44
+    }
+    
+    package "Notificaciones" {
+        usecase "Recibir Notificaciones" as UC50
+        usecase "Enviar Notificaciones Push" as UC51
+    }
+}
+
+' Relaciones Administrador
+Admin --> UC01
+Admin --> UC02
+Admin --> UC03
+Admin --> UC04
+Admin --> UC05
+Admin --> UC06
+Admin --> UC07
+Admin --> UC08
+Admin --> UC42
+Admin --> UC43
+Admin --> UC44
+
+' Relaciones Jefe de Servicio
+JefeServ --> UC10
+JefeServ --> UC11
+JefeServ --> UC12
+JefeServ --> UC13
+JefeServ --> UC14
+JefeServ --> UC31
+JefeServ --> UC34
+JefeServ --> UC43
+JefeServ --> UC50
+
+' Relaciones Jefe de Cocina
+JefeCoc --> UC20
+JefeCoc --> UC21
+JefeCoc --> UC22
+JefeCoc --> UC23
+JefeCoc --> UC43
+JefeCoc --> UC50
+
+' Relaciones Empleado
+Emp --> UC30
+Emp --> UC32
+Emp --> UC33
+Emp --> UC40
+Emp --> UC41
+Emp --> UC50
+
+' Relaciones Bachero
+Bach --> UC24
+Bach --> UC22
+Bach --> UC50
+
+' Inclusiones y Extensiones
+UC14 ..> UC21 : <<include>>
+UC10 ..> UC14 : <<include>>
+UC30 ..> UC51 : <<include>>
+UC33 ..> UC51 : <<include>>
+UC21 ..> UC51 : <<include>>
+UC31 ..> UC51 : <<include>>
+
+note right of UC13
+  Respeta ventanas
+  de cambio configuradas
+end note
+
+note right of UC14
+  Genera según reglas
+  de horario por servicio
+end note
+
+note bottom of UC24
+  MVP2: Con foto de
+  evidencia y código QR
+end note
+
+@enduml

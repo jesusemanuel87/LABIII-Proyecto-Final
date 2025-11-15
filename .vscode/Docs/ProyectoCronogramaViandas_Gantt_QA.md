@@ -2,7 +2,7 @@
 
 ## 1. Gantt de alto nivel del proyecto
 
-> Nota: Este apartado describe las actividades; el diagrama Gantt se puede construir en una herramienta como Excel, Project, Trello/Gantt o similar y exportarse como imagen (`./img/gantt_proyecto.png`).
+> Nota: Este apartado describe las actividades; el diagrama Gantt se puede construir en una herramienta como Excel, Project, Trello/Gantt o similar y exportarse como imagen (`./img/GanttCronogramaViandas.png`).
 
 ### 1.1 Fases principales
 
@@ -35,7 +35,7 @@
 
    - Pantallas de login, cronograma, solicitudes e inasistencias.
    - Consumo de API con Retrofit.
-   - Integración con FCM para notificaciones básicas.
+   - Integración con SignalR para notificaciones en tiempo real.
 
 6. **Pruebas unitarias, integración y ajustes** (Semana 9–10)
 
@@ -48,9 +48,9 @@
    - Exportación de diagramas (CU, clases, UI) a imágenes.
    - Generación de PDF finales.
 
-### 1.2 Tareas sugeridas para el Gantt
+### 1.2 Tareas del Gantt
 
-Se sugiere dividir el Gantt en tareas como:
+El Gantt se divide en las siguientes tareas:
 
 - Análisis de requerimientos
 - Diseño de modelo de datos
@@ -68,9 +68,8 @@ Se sugiere dividir el Gantt en tareas como:
 El Gantt puede ser representado como una tabla en el documento o como una imagen:
 
 ```markdown
-![Gantt del Proyecto](./img/gantt_proyecto.png)
+![Gantt del Proyecto](./img/GanttCronogramaViandas.png)
 ```
-
 ---
 
 ## 2. Plan de Pruebas / QA
@@ -109,7 +108,7 @@ El Gantt puede ser representado como una tabla en el documento o como una imagen
 - `ReemplazarEmpleado_DeberiaPermitirAntesDeHoraLimite()`
 - `ReemplazarEmpleado_NoDebePermitirDespuesDeHoraLimite()`
 
-Se recomienda usar **xUnit/NUnit** para las pruebas unitarias del backend.
+Se utilizará **xUnit** para las pruebas unitarias del backend.
 
 ---
 
@@ -154,15 +153,15 @@ Se recomienda usar **xUnit/NUnit** para las pruebas unitarias del backend.
 
 **Estrategia:**
 
-- Usar **pruebas de integración con un entorno de base de datos de pruebas** (por ejemplo, SQLite in-memory o una instancia de SQL local).
-- Levantar el WebApplicationFactory (en ASP.NET Core) para probar endpoints reales.
-- Preparar datos semilla (servicios, empleados, tipos de vianda, dietas) para escenarios de prueba.
+- Se utilizarán **pruebas de integración con un entorno de base de datos de pruebas** (SQLite in-memory o instancia de SQL local).
+- Se levantará el WebApplicationFactory (en ASP.NET Core) para probar endpoints reales.
+- Se prepararán datos semilla (servicios, empleados, tipos de vianda, dietas) para escenarios de prueba.
 
 ---
 
 ### 2.3 Pruebas end-to-end (E2E) básicas
 
-Opcionalmente, se pueden definir pruebas E2E que cubran el flujo completo:
+Se definirán pruebas E2E que cubrirán el flujo completo:
 
 1. Jefe de Servicio crea cronograma mensual.
 2. Sistema genera viandas.
@@ -171,7 +170,7 @@ Opcionalmente, se pueden definir pruebas E2E que cubran el flujo completo:
 5. Empleado solicita cambio de turno.
 6. Jefe de Servicio aprueba/rechaza la solicitud.
 
-Estas pruebas pueden realizarse manualmente en la primera instancia y luego automatizarse con herramientas de testing de UI si el alcance lo permite.
+Estas pruebas se realizarán manualmente en la primera instancia y posteriormente se automatizarán con herramientas de testing de UI según el alcance del proyecto.
 
 ---
 

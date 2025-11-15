@@ -36,7 +36,7 @@ Resumen: Aplicación web (ASP.NET Core) + aplicación móvil Android para gestio
 1. Solicitud de cambio de turno por empleado (vía app): el empleado puede solicitar cambio indicando día, turno deseado, motivo y opcionalmente con cuál empleado desea cambiar. La solicitud genera notificación al Jefe de Servicio y estado de la solicitud (pendiente/aprobada/rechazada).
 1. Informe de inasistencia por empleado (vía app): el empleado puede informar inasistencia indicando desde/hasta, motivo y anexar certificado (archivo). Se notifica al Jefe de Servicio.
 1. Perfil de empleado en app: ver datos del perfil, cambiar avatar (imagen) y cambiar contraseña.
-1. Notificaciones push (FCM) para avisos: creación/actualización de cronograma, solicitudes de cambio, inasistencias, viandas pendientes de aprobación, rechazos.
+1. Notificaciones en tiempo real (SignalR) para avisos: creación/actualización de cronograma, solicitudes de cambio, inasistencias, viandas pendientes de aprobación, rechazos.
 1. Reportes exportables (PDF/Excel): por día, por servicio, por tipo de dieta, lista de asignaciones y ausencias.
 1. Auditoría de cambios: quién hizo qué y cuándo (logs de cambios en cronogramas, aprobaciones, solicitudes y modificaciones).
 
@@ -54,7 +54,7 @@ Resumen: Aplicación web (ASP.NET Core) + aplicación móvil Android para gestio
    • Backend: ASP.NET Core Web API + Entity Framework Core
    • Base de datos: SQL Server / PostgreSQL con migraciones EF Core
    • Autenticación: Identity + JWT (empleados con credenciales DNI + contraseña)
-   • Android: Kotlin, MVVM, Retrofit, Room, WorkManager, FCM
+   • Android: Kotlin, MVVM, Retrofit, Room, WorkManager, SignalR
    • Frontend Web: React o Blazor para administración; la app móvil del Jefe de Servicio tendrá funciones de edición de cronograma.
 
 ---
@@ -146,7 +146,7 @@ Resumen: Aplicación web (ASP.NET Core) + aplicación móvil Android para gestio
     • Jefe de Servicio: gestión de cronogramas desde app (crear/editar/reemplazar)
     • Empleado: login, ver cronograma, solicitar cambio de turno, informar inasistencia, editar perfil
     • Generación automática de viandas y flujo de aprobación por Jefe de Cocina (web)
-    • Notificaciones básicas (FCM)
+    • Notificaciones básicas (SignalR)
     • Reportes básicos y auditoría
 
 ---
