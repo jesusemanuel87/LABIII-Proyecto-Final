@@ -1,0 +1,68 @@
+@startuml UIMockupsCronogramaViandas
+skinparam handwritten true
+skinparam rectangleBackgroundColor #fcfcfc
+skinparam rectangleBorderColor #2c3e50
+
+rectangle "WEB - Login" {
+  rectangle "[ Usuario ]" as WebLoginUser
+  rectangle "[ Contraseña ]" as WebLoginPass
+  rectangle "( Ingresar )" as WebLoginBtn
+}
+
+rectangle "WEB - Panel Administrativo" {
+  rectangle "Sidebar" {
+    rectangle "Dashboard" as WebMenuDash
+    rectangle "Empleados" as WebMenuEmp
+    rectangle "Servicios" as WebMenuServ
+    rectangle "Viandas/Dietas" as WebMenuViandas
+    rectangle "Reportes" as WebMenuReportes
+  }
+  rectangle "Contenido" {
+    rectangle "Tarjeta: Empleados activos" as WebCardEmp
+    rectangle "Tarjeta: Viandas hoy" as WebCardV
+    rectangle "Tarjeta: Solicitudes pend." as WebCardSol
+  }
+}
+
+rectangle "WEB - Cronograma Servicio" {
+  rectangle "Selector Servicio / Mes" as WebCronoFiltros
+  rectangle "Calendario mensual (celdas: Empleado + Turno)" as WebCronoCal
+}
+
+rectangle "APP JEFE SERVICIO - Dashboard" {
+  rectangle "Resumen hoy" {
+    rectangle "Presentes / Ausentes" as JSDashPres
+    rectangle "Viandas pendientes" as JSDashViandas
+    rectangle "Solicitudes cambio" as JSDashSol
+  }
+  rectangle "Botón: Ver Cronograma" as JSBtnCrono
+}
+
+rectangle "APP JEFE SERVICIO - Cronograma" {
+  rectangle "Vista mensual" as JSCal
+  rectangle "Detalle día seleccionado" as JSDia
+  rectangle "Acción: Reemplazar empleado" as JSReemplazar
+}
+
+rectangle "APP EMPLEADO - Cronograma" {
+  rectangle "Vista día/semana/mes" as EmpCal
+  rectangle "Detalle turno / vianda" as EmpDetalle
+}
+
+rectangle "APP EMPLEADO - Solicitar cambio" {
+  rectangle "Fecha" as EmpCambioFecha
+  rectangle "Turno destino" as EmpCambioTurno
+  rectangle "Motivo" as EmpCambioMotivo
+  rectangle "Empleado sugerido (opcional)" as EmpCambioSug
+  rectangle "Enviar" as EmpCambioEnviar
+}
+
+rectangle "APP EMPLEADO - Inasistencia" {
+  rectangle "Fecha desde" as EmpInaDesde
+  rectangle "Fecha hasta" as EmpInaHasta
+  rectangle "Motivo" as EmpInaMotivo
+  rectangle "Adjuntar certificado" as EmpInaAdj
+  rectangle "Enviar" as EmpInaEnviar
+}
+
+@enduml

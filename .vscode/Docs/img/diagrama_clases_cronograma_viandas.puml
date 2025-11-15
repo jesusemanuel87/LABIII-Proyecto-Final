@@ -1,0 +1,164 @@
+@startuml DiagramaClasesCronogramaViandas
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor #fdfefe
+skinparam classBorderColor #2c3e50
+
+class Usuario {
+  +IdUsuario: int
+  +Username: string
+  +PasswordHash: string
+  +Email: string
+  +Activo: bool
+}
+
+class Rol {
+  +IdRol: int
+  +Nombre: string
+  +Descripcion: string
+}
+
+class UsuarioRol {
+  +IdUsuario: int
+  +IdRol: int
+}
+
+class Servicio {
+  +IdServicio: int
+  +Nombre: string
+  +Descripcion: string
+  +EntregaViandaHabilitada: bool
+}
+
+class Empleado {
+  +IdEmpleado: int
+  +Nombre: string
+  +Apellido: string
+  +DNI: string
+  +CodigoBarras: string
+  +AvatarUrl: string
+  +Activo: bool
+}
+
+class Turno {
+  +IdTurno: int
+  +Nombre: string
+  +HoraInicio: time
+  +HoraFin: time
+}
+
+class ConfiguracionServicioTurno {
+  +IdConfiguracion: int
+  +HoraInicio: time
+  +HoraFin: time
+}
+
+class Cronograma {
+  +IdCronograma: int
+  +Mes: int
+  +Anio: int
+  +FechaCreacion: datetime
+  +CreadoPor: int
+}
+
+class CronogramaItem {
+  +IdItem: int
+  +Fecha: date
+  +Estado: string
+  +CreatedBy: int
+  +CreatedAt: datetime
+}
+
+class TipoVianda {
+  +IdTipoVianda: int
+  +Descripcion: string
+  +HoraInicio: time
+  +HoraFin: time
+  +Activo: bool
+}
+
+class TipoDieta {
+  +IdTipoDieta: int
+  +Nombre: string
+  +Descripcion: string
+  +Activo: bool
+}
+
+class Menu {
+  +IdMenu: int
+  +Nombre: string
+  +Descripcion: string
+  +FechaDesde: date
+  +FechaHasta: date
+}
+
+class AsignacionVianda {
+  +IdAsignacion: int
+  +Estado: string
+  +Observacion: string
+  +FechaCreacion: datetime
+}
+
+class VentanaCambio {
+  +IdVentana: int
+  +HoraLimiteCambio: time
+}
+
+class SolicitudCambioTurno {
+  +IdSolicitud: int
+  +FechaSolicitada: date
+  +TurnoOrigen: string
+  +TurnoDestino: string
+  +Motivo: string
+  +Estado: string
+  +FechaSolicitud: datetime
+}
+
+class Inasistencia {
+  +IdInasistencia: int
+  +FechaDesde: date
+  +FechaHasta: date
+  +Motivo: string
+  +ArchivoSoporteUrl: string
+  +Estado: string
+  +FechaNotificacion: datetime
+}
+
+class AuditLog {
+  +IdLog: int
+  +Entidad: string
+  +EntidadId: int
+  +Accion: string
+  +FechaHora: datetime
+  +UsuarioId: int
+  +Detalle: string
+}
+
+Usuario "1" -- "*" UsuarioRol
+Rol "1" -- "*" UsuarioRol
+
+Servicio "1" -- "*" Empleado
+Servicio "1" -- "*" Cronograma
+Servicio "1" -- "*" ConfiguracionServicioTurno
+Servicio "1" -- "*" VentanaCambio
+
+Empleado "1" -- "*" CronogramaItem
+Empleado "1" -- "*" Inasistencia
+Empleado "1" -- "*" SolicitudCambioTurno
+
+Turno "1" -- "*" ConfiguracionServicioTurno
+Turno "1" -- "*" CronogramaItem
+Turno "1" -- "*" VentanaCambio
+
+Cronograma "1" -- "*" CronogramaItem
+
+TipoDieta "1" -- "*" Menu
+Menu "1" -- "*" AsignacionVianda
+
+CronogramaItem "1" -- "*" AsignacionVianda
+TipoVianda "1" -- "*" AsignacionVianda
+
+VentanaCambio "1" -- "*" AsignacionVianda : regula
+
+AuditLog "1" -- "*" Usuario : "registradoPor"
+
+@enduml

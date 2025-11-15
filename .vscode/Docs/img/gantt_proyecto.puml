@@ -1,0 +1,22 @@
+@startgantt GanttCronogramaViandas
+printscale daily
+Project starts the 2026-02-01
+
+' Fases principales
+[Relevamiento y análisis inicial] lasts 10 days
+[Análisis detallado y diseño] lasts 14 days
+[Implementación backend (API + lógica)] lasts 21 days
+[Implementación frontend web] lasts 21 days
+[Implementación app Android] lasts 21 days
+[Pruebas y ajustes] lasts 14 days
+[Documentación y entrega] lasts 7 days
+
+' Dependencias
+[Análisis detallado y diseño] starts at [Relevamiento y análisis inicial]'s end
+[Implementación backend (API + lógica)] starts at [Análisis detallado y diseño]'s end
+[Implementación frontend web] starts at [Análisis detallado y diseño]'s end
+[Implementación app Android] starts at [Análisis detallado y diseño]'s end
+[Pruebas y ajustes] starts at [Implementación backend (API + lógica)]'s end
+[Documentación y entrega] starts at [Pruebas y ajustes]'s end
+
+@endgantt

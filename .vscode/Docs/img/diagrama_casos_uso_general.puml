@@ -1,0 +1,70 @@
+@startuml DiagramaCasosUsoGeneral
+left to right direction
+skinparam actorStyle awesome
+skinparam usecaseBorderColor #2c3e50
+skinparam usecaseBackgroundColor #ecf0f1
+skinparam packageStyle rectangle
+
+actor "Administrador" as Admin
+actor "Jefe de Servicio" as JefeServ
+actor "Jefe de Cocina" as JefeCoc
+actor "Bachero" as Bachero
+actor "Empleado" as Empl
+
+package "Administración" {
+  usecase "Gestionar usuarios y roles" as UC_Admin_Usuarios
+  usecase "Gestionar servicios" as UC_Admin_Servicios
+  usecase "Configurar parámetros globales" as UC_Admin_Param
+}
+
+package "Cronograma" {
+  usecase "Gestionar cronograma mensual" as UC_JS_Cronograma
+  usecase "Reemplazar empleado en el día" as UC_JS_Reemplazo
+  usecase "Gestionar solicitudes de cambio" as UC_JS_Solicitudes
+  usecase "Revisar inasistencias" as UC_JS_Inasistencias
+}
+
+package "Viandas y Dietas" {
+  usecase "Gestionar menús y tipos de dieta" as UC_JC_Menus
+  usecase "Configurar horarios de entrega" as UC_JC_Horarios
+  usecase "Aprobar/rechazar viandas" as UC_JC_Aprobar
+}
+
+package "App Empleado" {
+  usecase "Autenticarse" as UC_E_Login
+  usecase "Consultar cronograma personal" as UC_E_Crono
+  usecase "Solicitar cambio de turno" as UC_E_SolicitudCambio
+  usecase "Informar inasistencia" as UC_E_Inasistencia
+  usecase "Gestionar perfil" as UC_E_Perfil
+}
+
+package "Operación de Cocina" {
+  usecase "Consultar lista de viandas del día" as UC_B_Listado
+}
+
+Admin --> UC_Admin_Usuarios
+Admin --> UC_Admin_Servicios
+Admin --> UC_Admin_Param
+
+JefeServ --> UC_JS_Cronograma
+JefeServ --> UC_JS_Reemplazo
+JefeServ --> UC_JS_Solicitudes
+JefeServ --> UC_JS_Inasistencias
+
+JefeCoc --> UC_JC_Menus
+JefeCoc --> UC_JC_Horarios
+JefeCoc --> UC_JC_Aprobar
+
+Bachero --> UC_B_Listado
+
+Empl --> UC_E_Login
+Empl --> UC_E_Crono
+Empl --> UC_E_SolicitudCambio
+Empl --> UC_E_Inasistencia
+Empl --> UC_E_Perfil
+
+UC_JS_Cronograma .u.> UC_JS_Reemplazo : «incluye»
+UC_E_SolicitudCambio .u.> UC_JS_Solicitudes : «extiende»
+UC_E_Inasistencia .u.> UC_JS_Inasistencias : «extiende»
+
+@enduml
