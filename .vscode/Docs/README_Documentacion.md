@@ -1,4 +1,7 @@
+-- Active: 1756239377908@@127.0.0.1@3306@mysql
+
 # Índice de Documentación del Proyecto
+
 ## Sistema de Cronograma y Viandas - Hospital
 
 **Última actualización:** Noviembre 2025
@@ -10,9 +13,11 @@
 ### 1. Documentación de Presentación y Análisis
 
 #### ProyectoCronogramaViandas_Presentacion.md
+
 **Descripción:** Documento académico formal con toda la información del proyecto.
 
 **Contenido:**
+
 - Introducción y justificación del proyecto
 - Objetivos generales y específicos
 - Alcance y límites del sistema
@@ -27,9 +32,11 @@
 ---
 
 #### ProyectoCronogramaViandas_MVP1.md
+
 **Descripción:** Especificación técnica detallada de la primera entrega.
 
 **Contenido:**
+
 - Objetivos del MVP1
 - Actores y roles del sistema
 - Requerimientos funcionales detallados (17 puntos)
@@ -46,9 +53,11 @@
 ---
 
 #### ProyectoCronogramaViandas_MVP2.md ✨
+
 **Descripción:** Especificación de la segunda entrega con funcionalidades avanzadas.
 
 **Contenido:**
+
 - Objetivos del MVP2
 - Interfaz Web completa (Web Service) para todos los roles
 - Implementación de SignalR para notificaciones en tiempo real
@@ -65,9 +74,11 @@
 ---
 
 #### ProyectoCronogramaViandas_Gantt_QA.md
+
 **Descripción:** Planificación temporal del proyecto y plan de pruebas.
 
 **Contenido:**
+
 - Diagrama de Gantt (10 semanas, 7 fases)
 - Tareas detalladas del proyecto
 - Plan de pruebas unitarias
@@ -82,9 +93,11 @@
 ### 2. Documentación para Usuarios
 
 #### Manual_Usuario.md ✨
+
 **Descripción:** Guía de uso del sistema para todos los roles.
 
 **Contenido:**
+
 - Introducción y acceso al sistema
 - **Manual del Administrador**: Gestión de empleados, servicios, configuración
 - **Manual del Jefe de Servicio**: Cronogramas, solicitudes, inasistencias
@@ -100,9 +113,11 @@
 ### 3. Documentación Técnica
 
 #### API_Documentation.md ✨
+
 **Descripción:** Documentación completa de la API REST.
 
 **Contenido:**
+
 - Autenticación JWT
 - Endpoints de Empleados (CRUD, perfil, avatar, password)
 - Endpoints de Servicios y Turnos
@@ -122,9 +137,11 @@
 ### 4. Diagramas UML
 
 #### img/DiagramaCasosUsoGeneral.puml ✨
+
 **Descripción:** Diagrama PlantUML de casos de uso del sistema.
 
 **Contenido:**
+
 - 5 actores principales
 - 6 paquetes de funcionalidad:
   - Gestión de Configuración (8 casos de uso)
@@ -141,9 +158,11 @@
 ---
 
 #### img/DiagramaClasesCronogramaViandas.puml ✨
+
 **Descripción:** Diagrama de clases del dominio completo.
 
 **Contenido:**
+
 - 20+ entidades del sistema
 - Relaciones y cardinalidades
 - Atributos principales de cada clase
@@ -156,9 +175,11 @@
 ---
 
 #### img/UIMockupsCronogramaViandas.puml ✨ NUEVO
+
 **Descripción:** Mockups de interfaz de usuario en salt (PlantUML).
 
 **Contenido:**
+
 - Dashboard del Administrador
 - Panel del Jefe de Servicio (cronograma mensual)
 - Panel del Jefe de Cocina (viandas pendientes)
@@ -170,9 +191,11 @@
 ---
 
 #### img/DiagramaERD.puml ✨
+
 **Descripción:** Diagrama Entidad-Relación de la base de datos.
 
 **Contenido:**
+
 - 23 tablas del sistema
 - Claves primarias y foráneas
 - Tipos de datos
@@ -188,15 +211,11 @@
 
 #### img/GanttCronogramaViandas.png
 
-
 #### img/DiagramaCasosUsoGeneral.png
-
 
 #### img/DiagramaClasesCronogramaViandas.png
 
-
 #### img/UIMockupsCronogramaViandas.png
-
 
 #### img/DiagramaERD.png
 
@@ -206,11 +225,11 @@
 
 ### 📋 Pendiente
 
-| Tarea | Descripción | Prioridad |
-|-------|-------------|-----------|
-| Actualizar presentación con imágenes | Reemplazar placeholders con rutas reales | Media |
-| Crear datos de prueba (seed data) | Script para poblar BD con datos de ejemplo | Baja |
-| Documentar CI/CD | Guía de despliegue automatizado | Baja |
+| Tarea                                | Descripción                                | Prioridad |
+| ------------------------------------ | ------------------------------------------ | --------- |
+| Actualizar presentación con imágenes | Reemplazar placeholders con rutas reales   | Media     |
+| Crear datos de prueba (seed data)    | Script para poblar BD con datos de ejemplo | Baja      |
+| Documentar CI/CD                     | Guía de despliegue automatizado            | Baja      |
 
 ---
 
@@ -240,7 +259,7 @@
 ## 📞 Información de Contacto
 
 **Proyecto:** Sistema de Cronograma y Viandas - Hospital  
-**Institución:** ULP Universidad de la Punta 
+**Institución:** ULP Universidad de la Punta
 **Materia:** Laboratorio III  
 **Año:** 2025  
 **Alumno:** Jesús Emanuel García
@@ -249,12 +268,12 @@
 
 ## 📝 Historial de Cambios
 
-| Fecha | Versión | Cambios |
-|-------|---------|---------|
-| 2025-11-15 | 1.0 | Creación inicial de toda la documentación |
-| 2025-11-15 | 1.1 | Agregado MVP2, Manual Usuario, API Docs, Diagramas UML/ERD |
-| 2025-11-15 | 1.2 | Reemplazo de Firebase por SignalR en todos los documentos |
-| 2025-11-15 | 1.3 | Actualización de README.md con referencias correctas |
+| Fecha      | Versión | Cambios                                                    |
+| ---------- | ------- | ---------------------------------------------------------- |
+| 2025-11-15 | 1.0     | Creación inicial de toda la documentación                  |
+| 2025-11-15 | 1.1     | Agregado MVP2, Manual Usuario, API Docs, Diagramas UML/ERD |
+| 2025-11-15 | 1.2     | Reemplazo de Firebase por SignalR en todos los documentos  |
+| 2025-11-15 | 1.3     | Actualización de README.md con referencias correctas       |
 
 ---
 
